@@ -1,20 +1,29 @@
-.PHONY: run-all run-backend run-frontend db-reset db-open db-show-tables db-show-schema db-query db-init kill-backend kill-frontend show-logs stop-backend show-processes
+.PHONY: run-all run-backend run-frontend db-reset db-open db-show-tables db-show-schema db-query db-init kill-backend kill-frontend show-logs stop-backend docker-build docker-up docker-down
 
-# Переменные
-PYTHON = python
+# Variables
 DB_PATH = backend/db/app.db
 
-# Запуск сервисов
+# Docker commands
+docker-build:
+	docker-compose build
+
+docker-up:
+	docker-compose up
+
+docker-down:
+	docker-compose down
+
+# Run services
 run-all:
-	make run-backend & make run-frontend
+	docker-compose up
 
 run-backend:
-	cd backend && python -m uvicorn app.main:app --reload --port 8000
+	docker-compose up backend
 
 run-frontend:
 	cd frontend && npm start
 
-# Команды для остановки сервисов
+# Stop services
 kill-backend:
 	@echo "Stopping all backend processes..."
 	@# Убиваем процессы на портах более агрессивно
@@ -49,13 +58,13 @@ kill-frontend:
 		echo "Frontend server is not running"; \
 	fi
 
-# Команды для работы с базой данных
+# Database commands
 db-reset:
-	cd backend && $(PYTHON) -c "from app.services.db_service import DatabaseService; DatabaseService().reset_db()"
+	docker-compose exec backend python -c "from app.services.db_service import DatabaseService; DatabaseService().reset_db()"
 	@echo "Database has been reset successfully!"
 
 db-init:
-	cd backend && $(PYTHON) -c "from app.services.db_service import DatabaseService; DatabaseService()"
+	docker-compose exec backend python -c "from app.services.db_service import DatabaseService; DatabaseService()"
 	@echo "Database has been initialized successfully!"
 
 db-open:
@@ -90,22 +99,13 @@ db-query:
 		exit 1; \
 	fi
 
-# Тесты
+# Tests
 test-backend:
-	cd backend && $(PYTHON) -m pytest
+	docker-compose exec backend python -m pytest
 
-# Просмотр логов
+# View logs
 show-logs:
-	@if [ -f backend/logs/app.log ]; then \
-		tail -f backend/logs/app.log; \
-	else \
-		echo "Log file not found at backend/logs/app.log"; \
-		exit 1; \
-	fi
-
-# Примеры использования:
-# make db-query q="SELECT * FROM telegram_bindings;"
-# make db-query q="SELECT * FROM telegram_channels;"
+	docker-compose logs -f backend telegram-bot
 
 stop-backend:
 	kill -9 $(lsof -ti:8000) || true

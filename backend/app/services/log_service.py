@@ -7,22 +7,22 @@ class LogService:
     def __init__(self):
         # Создаем директорию для логов если её нет
         os.makedirs('logs', exist_ok=True)
-        
+
         # Настраиваем основной логгер
         self.logger = logging.getLogger('ai_cross_post')
         self.logger.setLevel(logging.INFO)
-        
+
         # Форматтер для логов
         formatter = logging.Formatter(
             '%(asctime)s [%(levelname)s] %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
-        
+
         # Хендлер для файла
         file_handler = logging.FileHandler('logs/app.log')
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
-        
+
         # Хендлер для консоли
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
@@ -50,9 +50,9 @@ class LogService:
         )
 
     def post_transformed(
-        self, 
-        user_id: str, 
-        from_platform: str, 
+        self,
+        user_id: str,
+        from_platform: str,
         to_platform: str,
         original_content: str,
         transformed_content: str
@@ -68,4 +68,4 @@ class LogService:
         if user_id:
             self.logger.error(f"Error for user {user_id} | {message}", exc_info=error)
         else:
-            self.logger.error(message, exc_info=error) 
+            self.logger.error(message, exc_info=error)

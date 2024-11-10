@@ -4,6 +4,13 @@ import os
 import sys
 import logging
 from datetime import datetime
+import logging.config
+
+# Load logging configuration at the start
+logging.config.fileConfig('logging.conf')
+
+# Disable httpx logs which contain the bot token
+logging.getLogger("httpx").setLevel(logging.WARNING)
 
 # Добавляем путь к backend/app в PYTHONPATH
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -35,7 +42,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         token = args[0]
         logger.info(f"Start command contains token: {token}")
         # Здесь можно добавить логику обработки токена
-    
+
     await update.message.reply_text(
         "Bot is ready to monitor channels. "
         "Make sure to add me as an administrator to your channel."
@@ -52,7 +59,7 @@ async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE
     channel_id = message.chat_id
     message_id = message.message_id
     chat_type = message.chat.type
-    
+
     logger.info(f"""
     Received post:
     Channel ID: {channel_id}
@@ -60,11 +67,11 @@ async def handle_channel_post(update: Update, context: ContextTypes.DEFAULT_TYPE
     Chat Type: {chat_type}
     Text: {message.text or message.caption or 'No text'}
     """)
-    
+
     # Проверяем, является ли канал одним из привязанных
     channel_ids = db.get_channel_ids()
     logger.info(f"Linked channels: {channel_ids}")
-    
+
     if channel_id not in channel_ids:
         logger.info(f"Ignoring post from non-linked channel: {channel_id}")
         return
@@ -96,19 +103,19 @@ def main() -> None:
         return
 
     logger.info("Starting bot...")
-    
+
     # Создаем приложение
     application = Application.builder().token(token).build()
 
     # Добавляем обработчики
     application.add_handler(CommandHandler("start", start))
-    
+
     # Обработчик для новых постов в каналах
     application.add_handler(MessageHandler(
         filters.ChatType.CHANNEL & (filters.TEXT | filters.CAPTION),
         handle_channel_post
     ))
-    
+
     # Обработчик для отредактированных постов
     application.add_handler(MessageHandler(
         filters.UpdateType.EDITED_CHANNEL_POST & (filters.TEXT | filters.CAPTION),
@@ -119,10 +126,10 @@ def main() -> None:
     application.add_error_handler(error_handler)
 
     logger.info("Bot is ready to start polling")
-    
+
     # Запускаем бота
     application.run_polling(allowed_updates=Update.ALL_TYPES)
-    
+
     logger.info("Bot stopped")
 
 if __name__ == '__main__':

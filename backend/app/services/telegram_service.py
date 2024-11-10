@@ -102,7 +102,7 @@ class TelegramService:
                 # Всё ок, сохраняем канал
                 if user.id not in self.user_channels:
                     self.user_channels[user.id] = {}
-                
+
                 self.user_channels[user.id][channel_id] = True
                 self.log.channel_verified(user.id, channel_id, channel_title)
 
@@ -170,7 +170,7 @@ class TelegramService:
 
         # 2. Генерируем уникальный код верификации
         verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-        
+
         # 3. Сохраняем запрос на верификацию
         self.verification_requests[channel_id] = {
             'user_id': user_id,
