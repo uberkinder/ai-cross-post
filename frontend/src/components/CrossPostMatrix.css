@@ -1,0 +1,152 @@
+.cross-post-matrix {
+  margin: 20px;
+}
+
+.cross-post-matrix table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cross-post-matrix th,
+.cross-post-matrix td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.cross-post-matrix th {
+  background-color: #f5f5f5;
+}
+
+.platform-header,
+.platform-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.platform-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.direction-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.direction-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.arrow {
+  font-size: 14px;
+  color: #666;
+}
+
+.cell-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.cell-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cell-actions button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cell-actions button:last-child {
+  background-color: #2196F3;
+  color: white;
+}
+
+.cell-actions button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.inactive {
+  background-color: #f5f5f5;
+}
+
+.cell-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.platform-name {
+  font-weight: 500;
+}
+
+.connection-status {
+  font-size: 14px;
+}
+
+.connection-status.connected {
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+.setup-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.setup-button:hover {
+  background-color: #e0e0e0;
+}
+
+.platform-cell {
+  padding: 12px;
+}
+
+.platform-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.connected-button {
+  background-color: transparent;
+  border: none;
+  color: #4CAF50;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.connected-button:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+} 

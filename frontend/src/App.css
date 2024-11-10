@@ -1,0 +1,44 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.matrix-section {
+  margin-bottom: 40px;
+}
+
+.posts-queue {
+  text-align: left;
+}
+
+.posts-queue ul {
+  list-style: none;
+  padding: 0;
+}
+
+.posts-queue li {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.posts-queue small {
+  color: #666;
+} 
